@@ -1,6 +1,7 @@
 # Proyecto de Moda Hombre en Mercado Libre
 
 Este proyecto tiene como objetivo realizar un scraping de datos de productos de moda de hombre en Mercado Libre. Los datos obtenidos incluyen el nombre del producto y su precio, que luego se procesan y se almacenan en un DataFrame.
+Tenemos diferentes ramas por ejemplo 'Scrapping' para el desarrollo de la utilidad del proyecto.
 
 ## Tecnologías utilizadas
 
