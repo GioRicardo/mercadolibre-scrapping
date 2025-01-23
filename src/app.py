@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 import pandas as pd
 from flask import Flask, render_template_string
+import os  # Importa os para manejar variables de entorno
 
 app = Flask(__name__)
 
@@ -13,7 +14,6 @@ def index():
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36'
     }
 
-    # r = requests.get('https://www.thewhiskyexchange.com/c/35/japanese-whisky')
     r = requests.get('https://listado.mercadolibre.com.co/_Container_fs-moda-hombre-v4#deal_print_id=98232580-d89d-11ef-b6ad-099c3d0153ab&c_id=carousel&c_element_order=3&c_campaign=CARHOMBRE&c_uid=98232580-d89d-11ef-b6ad-099c3d0153ab')
     soup = BeautifulSoup(r.content, 'lxml')
 
@@ -31,7 +31,7 @@ def index():
     for link in productlinks:
         try:
             r = requests.get(link, headers=headers)
-            r.raise_for_status()  # Verifica si la solicitud fue exitosa
+            r.raise_for_status()
 
             soup = BeautifulSoup(r.content, 'lxml')
 
@@ -111,6 +111,6 @@ def index():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
-
-    
+    # Usar el puerto de Render si está disponible, o 5000 como valor predeterminado
+    port = int(os.environ.get('PORT', 5000))
+    app.run(debug=True, host='0.0.0.0', port=port)
