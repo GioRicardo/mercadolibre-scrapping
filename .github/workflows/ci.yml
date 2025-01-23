@@ -3,37 +3,37 @@ name: Web Scraping Pipeline
 on:
   push:
     branches:
-      - main  
+      - main  # Se ejecutará cuando se haga push a la rama principal
 
 jobs:
   scrape:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest  # Usa una máquina virtual con Ubuntu
 
     steps:
-      # 1. Descargar el código del repositorio
-      - name: Checkout code
-        uses: actions/checkout@v3
+    # 1. Descargar el código del repositorio
+    - name: Checkout code
+      uses: actions/checkout@v3
 
-      # 2. Configurar Python
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.9'  # Cambiar si usas otra versión
+    # 2. Configurar Python (actualizado a Python 3.10)
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'  # Ahora estamos usando Python 3.10
 
-      # 3. Instalar dependencias desde requirements.txt
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
+    # 3. Instalar dependencias desde requirements.txt
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
 
-      # 4. Ejecutar el script de scraping
-      - name: Run scraping script
-        run: python src/ejecucion.py  # Ruta correcta para ejecutar el script
+    # 4. Ejecutar el script de scraping
+    - name: Run scraping script
+      run: python src/ejecucion.py  # Asegúrate de que esta ruta sea correcta
 
-      # 5. Opcional: Cargar el archivo HTML generado como artefacto
-      - name: Upload HTML artifact
-        if: success()
-        uses: actions/upload-artifact@v3
-        with:
-          name: productos_mercadolibre
-          path: productos_mercadolibre.html
+    # 5. Opcional: Cargar el archivo HTML generado como artefacto
+    - name: Upload HTML artifact
+      if: success()  # Solo si el flujo de trabajo fue exitoso
+      uses: actions/upload-artifact@v3
+      with:
+        name: productos_mercadolibre  # Nombre del artefacto
+        path: productos_mercadolibre.html  # Ruta del archivo HTML generado
